@@ -21,7 +21,52 @@ const Login = () => {
         name: underline ? name : undefined,
         email: email,
         password: password,
+      });  const handleSubmit = async (e) => {
+    console.log('hey');
+    e.preventDefault();
+    try {
+      const endpoint = underline ? '/signup' : '/login';
+      const response = await axios.post(`${BASE_URL}${endpoint}`, {
+        name: underline ? name : undefined,
+        email: email,
+        password: password,
       });
+  
+
+      const responseData = response.data;
+      console.log(responseData);
+      if (responseData.success) {
+        localStorage.setItem('auth-token', responseData.token);
+        Swal.fire({
+          title: 'Success!',
+          text: underline ? 'You have successfully signed up!' : 'You have successfully logged in!',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        }).then(() => {
+            setName('');
+            setEmail('');
+            setPassword('');
+          navigate('/');
+        });
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: responseData.message,
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      }
+    } catch (error) {
+      console.log({ error: "occur in frontend", details: error });
+      Swal.fire({
+        title: 'Error!',
+        text: 'An error occurred. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
+  };
+
   
 
       const responseData = response.data;
@@ -63,7 +108,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen overflow-hidden bg-[#181A2E]">
+    <div className="flex flex-col items-center justify-center h-screen overflow-hidden bg-[#181A2E] gap-8">
+        <h1 className="text-white text-4xl underline decoration-purple-500">Registration Form</h1>
       <form onSubmit={handleSubmit} className="p-8 bg-gradient-to-r from-[#434974] to-[#242949] space-y-12 rounded-xl">
         <div className="text-white text-xl flex justify-around mb-4 space-x-1">
           <span
