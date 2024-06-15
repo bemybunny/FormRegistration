@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL; // Replace with your actual base URL
+const BASE_URL = import.meta.env.VITE_BASE_URL; 
 
 const Login = () => {
   const [underline, setUnderline] = useState(true);
@@ -14,7 +14,16 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name || !email || !password) {
+    if (underline===true && ( !name || !email || !password)) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please fill out all fields.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+      return;
+    }
+    else if(underline===false && (!email ||  !password)){
       Swal.fire({
         title: 'Error!',
         text: 'Please fill out all fields.',
