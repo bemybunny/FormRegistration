@@ -14,7 +14,15 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (underline===true && ( !name || !email || !password)) {
+    if ((!email || !password)) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please fill out all fields.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+      return;
+    } else if(underline && !name){
       Swal.fire({
         title: 'Error!',
         text: 'Please fill out all fields.',
@@ -23,15 +31,7 @@ const Login = () => {
       });
       return;
     }
-    else if(underline===false && (!email ||  !password)){
-      Swal.fire({
-        title: 'Error!',
-        text: 'Please fill out all fields.',
-        icon: 'error',
-        confirmButtonText: 'OK',
-      });
-      return;
-    }
+
     if (password.length < 8) {
       Swal.fire({
         title: 'Error!',
