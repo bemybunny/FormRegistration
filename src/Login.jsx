@@ -3,8 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const BASE_URL = 'http://localhost:4000'
-// import.meta.env.VITE_BASE_URL; // Replace with your actual base URL
+const BASE_URL = import.meta.env.VITE_BASE_URL; // Replace with your actual base URL
 
 const Login = () => {
   const [underline, setUnderline] = useState(true);
@@ -24,7 +23,7 @@ const Login = () => {
       });
 
       const responseData = response.data;
-      console.log(responseData);
+     // console.log(responseData);
       if (responseData.success) {
         localStorage.clear();
         localStorage.setItem('auth-token', responseData.token);
