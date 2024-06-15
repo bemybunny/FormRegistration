@@ -14,6 +14,17 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (password.length < 8) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Password must be at least 8 characters long.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+      return;
+    }
+    
     try {
       const endpoint = underline ? '/signup' : '/login';
       const response = await axios.post(`${BASE_URL}${endpoint}`, {
